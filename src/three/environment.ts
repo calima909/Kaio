@@ -9,36 +9,63 @@
  * calcola versioni sfocate della texture per simulare riflessioni
  * con diversi livelli di roughness sui materiali.
  */
-//import { HDRLoader } from 'three/examples/jsm/Addons.js'
-import { PMREMGenerator, Scene, WebGPURenderer } from 'three/webgpu'
-import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js'
-import { Euler } from 'three/webgpu'
 
-import exrUrl from '../assets/hdrmaps_com_free_10K.exr?url'
+import { GainMapDecoderMaterial, QuadRenderer } from '@monogrid/gainmap-js/webgpu'
+import { EquirectangularReflectionMapping, Euler, Scene, WebGPURenderer } from 'three/webgpu'
+import { SRGBColorSpace, LinearSRGBColorSpace } from 'three/webgpu'
+import { TextureLoader, HalfFloatType, LinearSRGBColorSpace as LinearSRGB } from 'three'
 
-export async function loadEnvironment (scene: Scene, renderer: WebGPURenderer) {
-  renderer.toneMappingExposure = 0.7
+export async function loadEnvironment(scene: Scene, renderer: WebGPURenderer) {
   
-  const pmremGenerator = new PMREMGenerator(renderer)
-  pmremGenerator.compileEquirectangularShader()
+  const loader = new TextureLoader()
 
-  // const hdrLoader = new HDRLoader()
-  // const hdrTexture = await hdrLoader.loadAsync(hdrUrl)
+  const [sdr, gainMap, metadata] = await Promise.all([
+    loader.loadAsync('/hdr.jpg'),
+    loader.loadAsync('/hdr-gainmap.jpg'),
+    fetch('/hdr.json').then(r => r.json())
+  ])
 
-  const exrLoader = new EXRLoader()
-  const exrTexture = await exrLoader.loadAsync(exrUrl)
+  sdr.colorSpace = SRGBColorSpace
+  gainMap.colorSpace = LinearSRGBColorSpace
+  sdr.needsUpdate = true
+  gainMap.needsUpdate = true
 
-  const envMap = pmremGenerator.fromEquirectangular(exrTexture).texture
-  
-  const rotation = new Euler(0, 160)
+  const material = new GainMapDecoderMaterial({
+    sdr,
+    gainMap,
+    gainMapMin: metadata.gainMapMin,
+    gainMapMax: metadata.gainMapMax,
+    gamma: metadata.gamma,
+    offsetHdr: metadata.offsetHdr,
+    offsetSdr: metadata.offsetSdr,
+    hdrCapacityMin: metadata.hdrCapacityMin,
+    hdrCapacityMax: metadata.hdrCapacityMax,
+    maxDisplayBoost: Math.pow(2, metadata.hdrCapacityMax)
+  })
 
-  scene.environment = envMap
+  const quadRenderer = new QuadRenderer({
+    width:      sdr.image.width,
+    height:     sdr.image.height,
+    type:       HalfFloatType,
+    colorSpace: LinearSRGB,
+    material,
+    renderer,
+    renderTargetOptions: {
+      mapping: EquirectangularReflectionMapping
+    }
+  })
+
+  await quadRenderer.render()
+
+  const envTexture = quadRenderer.renderTarget.texture
+
+  const rotation = new Euler(Math.PI, 155, 0)
+  scene.environment = envTexture
   scene.environmentRotation = rotation
-
-  scene.background = envMap
+  scene.background = envTexture
   scene.backgroundRotation = rotation
 
-  // Le risorse intermedie non servono più: liberiamo la memoria GPU.
-  exrTexture.dispose()
-  pmremGenerator.dispose()
+  sdr.dispose()
+  gainMap.dispose()
+  material.dispose()
 }

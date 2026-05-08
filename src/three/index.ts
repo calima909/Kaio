@@ -10,7 +10,6 @@
  */
 import gsap from 'gsap'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
-import { Inspector } from 'three/addons/inspector/Inspector.js'
 import { Timer, Vector3 } from 'three/webgpu'
 import { watch } from 'vue'
 
@@ -24,6 +23,7 @@ import { createPostProcessing } from './postprocessing'
 import { createEngine } from './setup'
 
 import { WaterCone } from './waterFountain.ts'
+//import { Inspector } from 'three/addons/inspector/Inspector.js'
 
 /**
  * Inizializza l'intera scena 3D dentro il contenitore HTML fornito.
@@ -34,12 +34,11 @@ import { WaterCone } from './waterFountain.ts'
 export async function initScene (container: HTMLElement): Promise<() => void> {
   // 1. Creare il motore di rendering
   const { scene, camera, renderer, onResize } = await createEngine(container)
-  // const axesHelper = new THREE.AxesHelper(5)
-  // axesHelper.scale.set(101, 10, 10)
-  // scene.add(axesHelper)
-  const inspector = new Inspector()
-  inspector.setRenderer(renderer)
-  container.appendChild(inspector.domElement)
+
+  // Inspector commentato per evitare errore fetch su json del enviroment
+  // const inspector = new Inspector()
+  // inspector.setRenderer(renderer)
+  // container.appendChild(inspector.domElement)
 
   // 2. Caricare l'ambiente HDRI
   await loadEnvironment(scene, renderer)
@@ -68,7 +67,7 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
   const postProcessing = createPostProcessing(renderer, scene, camera)
 
   // 6. Posizionare la camera e i controlli orbitali
-  camera.position.set(-30, 20, 30)
+  camera.position.set(-30, 20, 10)
   camera.lookAt(0, 0, 0)
 
   const controls = new OrbitControls(camera, renderer.domElement)
@@ -112,7 +111,7 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
   const timer = new Timer()
 
   renderer.setAnimationLoop(() => {
-    inspector.begin()
+    //inspector.begin()
     timer.update()
     const delta = timer.getDelta()
     const elapsed = timer.getElapsed()
@@ -125,7 +124,7 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
     updateHotspotScreenPositions(markers, camera, container)
 
     postProcessing.render()
-    inspector.finish()
+    //inspector.finish()
   })
 
   // 10. Restituire la funzione di cleanup

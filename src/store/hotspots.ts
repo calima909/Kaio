@@ -31,7 +31,7 @@ export const hotspots = reactive<Record<string, Hotspot>>({
     x: 0,
     y: 0,
     visible: false,
-    description: `Questa è la macchina di Re Kaio, un veicolo unico che può viaggiare a velocità incredibili ma sfortunatamente non può curvare!
+    description: `Questa è la macchina di Re Kaio, un veicolo unico che può viaggiare a velocità incredibili ma sfortunatamente non può andare fuori strada!
     <br><br>
     [Premi Freccia su e giù per andare avanti e indietro]`
   },
@@ -44,7 +44,7 @@ export const hotspots = reactive<Record<string, Hotspot>>({
     x: 0,
     y: 0,
     visible: false,
-    description: `La casa di Re Kaio è un luogo di pace e tranquillità, dove il tempo sembra scorrere più lentamente.`
+    description: `La casa di Re Kaio è un luogo di pace e tranquillità, dove il tempo sembra scorrere più lentamente, meglio non disturbarlo...`
   },
   fontana: {
     objectName: 'fontana',
