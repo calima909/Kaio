@@ -14,7 +14,7 @@ import {
   TextureLoader,
 } from 'three/webgpu'
 
-import perlinUrl from '../assets/perlin.png?url'
+import perlinUrl from '/perlin.png?url'
 
 /**
  * Wind Shader — Simulazione del vento con TSL (Three Shading Language).

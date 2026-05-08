@@ -9,8 +9,8 @@ import {
   TextureLoader,
 } from 'three/webgpu'
 
-import bakeUrl from '../assets/bake.png'
-import modelUrl from '../assets/kaio.glb?url'
+import bakeUrl from '/bake.png'
+import modelUrl from '/kaio.glb?url'
 import { windShader } from './windShader'
 
 export async function loadModel (scene: Scene): Promise<Group> {
