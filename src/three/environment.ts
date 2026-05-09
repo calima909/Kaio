@@ -18,12 +18,20 @@ import { TextureLoader, HalfFloatType, LinearSRGBColorSpace as LinearSRGB } from
 export async function loadEnvironment(scene: Scene, renderer: WebGPURenderer) {
   
   const loader = new TextureLoader()
-
+  
+  // Fix path per deploy
+  const base = import.meta.env.BASE_URL 
   const [sdr, gainMap, metadata] = await Promise.all([
-    loader.loadAsync('/hdr.jpg'),
-    loader.loadAsync('/hdr-gainmap.jpg'),
-    fetch('/hdr.json').then(r => r.json())
+    loader.loadAsync(base + 'hdr.jpg'),
+    loader.loadAsync(base + 'hdr-gainmap.jpg'),
+    fetch(base + 'hdr.json').then(r => r.json())
   ])
+
+  // const [sdr, gainMap, metadata] = await Promise.all([
+  //   loader.loadAsync('/hdr.jpg'),
+  //   loader.loadAsync('/hdr-gainmap.jpg'),
+  //   fetch('/hdr.json').then(r => r.json())
+  // ])
 
   sdr.colorSpace = SRGBColorSpace
   gainMap.colorSpace = LinearSRGBColorSpace
