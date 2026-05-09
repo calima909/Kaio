@@ -1,8 +1,8 @@
-const trackSound = new Audio('/Kaio/sounds/track.mp3')
+const trackSound = new Audio(`${import.meta.env.BASE_URL}sounds/track.mp3`)
 trackSound.volume = 0.3
 trackSound.loop = true
 
-const houseSound = new Audio('/Kaio/sounds/knock.mp3')
+const houseSound = new Audio(`${import.meta.env.BASE_URL}sounds/knock.mp3`)
 houseSound.volume = 1
 
 export function setupTrackSound() {
