@@ -41,7 +41,7 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
   // container.appendChild(inspector.domElement)
 
   // 2. Caricare l'ambiente HDRI
-  // await loadEnvironment(scene, renderer)
+  await loadEnvironment(scene, renderer)
 
   // 3. Caricare il modello GLB con materiali baked
   const model = await loadModel(scene)
