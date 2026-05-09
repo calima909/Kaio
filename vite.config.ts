@@ -5,7 +5,7 @@ import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: process.env.GITHUB_ACTIONS ? '/42firenze-workshop-day3/' : '/',
+  base: process.env.GITHUB_ACTIONS ? '/Kaio/' : '/',
   plugins: [
     vue(),
     UnoCSS()

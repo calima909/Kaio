@@ -10,7 +10,8 @@
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
     "start": "vite",
-    "typecheck": "vue-tsc --noEmit"
+    "typecheck": "vue-tsc --noEmit",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@monogrid/gainmap-js": "^3.4.0",
@@ -29,6 +30,7 @@
     "eslint": "^9.39.4",
     "eslint-plugin-perfectionist": "^5.8.0",
     "eslint-plugin-vue": "^10.8.0",
+    "gh-pages": "^6.3.0",
     "jiti": "^2.6.1",
     "neostandard": "^0.13.0",
     "typescript": "^6.0.2",
