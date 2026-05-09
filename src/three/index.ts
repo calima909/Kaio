@@ -23,6 +23,8 @@ import { createPostProcessing } from './postprocessing'
 import { createEngine } from './setup'
 
 import { WaterCone } from './waterFountain.ts'
+
+import { setupTrackSound, playHouseSound, disposeAudio } from './sounds.ts'
 //import { Inspector } from 'three/addons/inspector/Inspector.js'
 
 /**
@@ -60,8 +62,9 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
   // 4. Preparare le animazioni procedurali
   const animations = createAnimations(model, fountain)
 
-  // 4.1 Setup controlli
+  // 4.1 Setup controlli e Audio
   setupControls()
+  setupTrackSound()
 
   // 5. Configurare la pipeline di post-processing
   const postProcessing = createPostProcessing(renderer, scene, camera)
@@ -85,12 +88,17 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
   // 8. Vue -> Three.js: osservare il router per animare la camera
   const _target = new Vector3()
   const defaultFov = camera.fov
-  const zoomedFov = 30
+  const zoomedFov = 30  
 
   const stopWatch = watch(
     () => router.currentRoute.value.params.id,
     (id) => {
       const marker = id ? markers.find(m => m.id === id) : undefined
+
+      if (id === 'casa') {
+        playHouseSound() 
+       
+      }
 
       if (marker) {
         marker.object.getWorldPosition(_target)
@@ -134,5 +142,6 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
     window.removeEventListener('resize', onResize)
     controls.dispose()
     renderer.dispose()
+    disposeAudio()
   }
 }
