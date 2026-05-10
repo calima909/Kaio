@@ -51,7 +51,10 @@
 
   export function toggleMute() {
   isMuted = !isMuted
-  trackSound.muted = isMuted  
+  trackSound.muted = isMuted 
+  houseSound.muted = isMuted
+  fountainSound.muted = isMuted
+  carSound.muted = isMuted
   return isMuted
 }
 

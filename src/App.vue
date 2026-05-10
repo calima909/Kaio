@@ -114,43 +114,43 @@ body { overflow: hidden; background: #000; }
   opacity: 0;
 }
 
- .audio-button {
-  position: fixed;
-  top: 24px;
-  right: 24px;
-  z-index: 100;
+.audio-button {
+position: fixed;
+top: 24px;
+left: 24px;
+z-index: 100;
 
-  width: 74px;
-  height: 74px;
+width: 74px;
+height: 74px;
 
-  border: none;
-  border-radius: 50%;
+border: none;
+border-radius: 50%;
 
-  cursor: pointer;
+cursor: pointer;
 
-  background:
-    radial-gradient(circle at 30% 30%,
-      #ffe27a 0%,
-      #ffb300 35%,
-      #ff7a00 70%,
-      #d94b00 100%
-    );
+background:
+  radial-gradient(circle at 30% 30%,
+    #ffe27a 0%,
+    #ffb300 35%,
+    #ff7a00 70%,
+    #d94b00 100%
+  );
 
-  box-shadow:
-    inset -6px -10px 16px rgba(0,0,0,0.25),
-    inset 6px 6px 10px rgba(255,255,255,0.35),
-    0 0 20px rgba(255,140,0,0.8),
-    0 0 40px rgba(255,100,0,0.45);
+box-shadow:
+  inset -6px -10px 16px rgba(0,0,0,0.25),
+  inset 6px 6px 10px rgba(255,255,255,0.35),
+  0 0 20px rgba(255,140,0,0.8),
+  0 0 40px rgba(255,100,0,0.45);
 
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+transition:
+  transform 0.2s ease,
+  box-shadow 0.2s ease;
 
-  overflow: hidden;
+overflow: hidden;
 
-  backdrop-filter: blur(4px);
+backdrop-filter: blur(4px);
 }
-
+/* icona audio */
 .audio-icon {
   position: absolute;
   inset: 0;
