@@ -24,7 +24,7 @@ export type Hotspot = {
 export const hotspots = reactive<Record<string, Hotspot>>({
   car: {
     objectName: 'macchina',
-    offsetY: 0.1,
+    offsetY: 0,
     offsetX: 0,
     offsetZ: 0,
     label: 'Macchina di Re Kaio',
@@ -37,9 +37,9 @@ export const hotspots = reactive<Record<string, Hotspot>>({
   },
   casa: {
     objectName: 'casa1',
-    offsetY: 0.1,
+    offsetY: -0.3,
     offsetX: -1.5,
-    offsetZ: 0,
+    offsetZ: -0.3,
     label: 'Casa di Re Kaio',
     x: 0,
     y: 0,
@@ -48,9 +48,9 @@ export const hotspots = reactive<Record<string, Hotspot>>({
   },
   fontana: {
     objectName: 'fontana',
-    offsetY: 0.1,
+    offsetY: -0.1,
     offsetX: -1,
-    offsetZ: 0,
+    offsetZ: -0.2,
     label: 'Fontana Sacra',
     x: 0,
     y: 0,

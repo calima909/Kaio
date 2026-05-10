@@ -24,7 +24,7 @@ import { createEngine } from './setup'
 
 import { WaterCone } from './waterFountain.ts'
 
-import { setupTrackSound, playHouseSound, disposeAudio } from './sounds.ts'
+import { setupTrackSound, playHouseSound, playFountainSound, playCarSound, disposeAudio } from './sounds.ts'
 //import { Inspector } from 'three/addons/inspector/Inspector.js'
 
 /**
@@ -96,10 +96,14 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
       const marker = id ? markers.find(m => m.id === id) : undefined
 
       if (id === 'casa') {
-        playHouseSound() 
-       
+        playHouseSound()       
       }
-
+      else if (id === 'fontana') {
+        playFountainSound()
+      }
+      else if (id === 'car') {
+        playCarSound()
+      }
       if (marker) {
         marker.object.getWorldPosition(_target)
         _target.y += marker.offsetY

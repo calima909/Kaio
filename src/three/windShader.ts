@@ -39,7 +39,7 @@ export const windShader = async () => {
   perlinTexture.wrapS = RepeatWrapping
   perlinTexture.wrapT = RepeatWrapping
 
-  const windSpeed = float(1)
+  const windSpeed = float(0.7)
   const windStrength = float(0.1)
   const noiseScale = float(0.1)
 
