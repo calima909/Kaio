@@ -38,9 +38,9 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
   const { scene, camera, renderer, onResize } = await createEngine(container)
 
   // Inspector commentato per evitare errore fetch su json del enviroment
-  // const inspector = new Inspector()
-  // inspector.setRenderer(renderer)
-  // container.appendChild(inspector.domElement)
+  //const inspector = new Inspector()
+  //inspector.setRenderer(renderer)
+  //container.appendChild(inspector.domElement)
 
   // 2. Caricare l'ambiente HDRI
   await loadEnvironment(scene, renderer)
@@ -70,7 +70,13 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
   const postProcessing = createPostProcessing(renderer, scene, camera)
 
   // 6. Posizionare la camera e i controlli orbitali
-  camera.position.set(-30, 20, 10)
+  const isMobile = window.matchMedia('(max-width: 768px)').matches
+
+  if (isMobile) {
+    camera.position.set(-40, 30, 15)
+  } else {
+    camera.position.set(-30, 20, 10)
+  }
   camera.lookAt(0, 0, 0)
 
   const controls = new OrbitControls(camera, renderer.domElement)
@@ -79,6 +85,8 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
   controls.enablePan = false
   controls.minDistance = 10
   controls.maxDistance = 30
+  controls.minDistance = 15
+  controls.maxDistance = isMobile ? 45 : 30
   controls.target.set(0, 0, 0)
   controls.update()
 
@@ -122,6 +130,23 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
   //  e controls.update() nel loop applica lo spostamento ogni frame)
   const timer = new Timer()
 
+  let frames = 0
+  let lastTime = performance.now()
+
+  const fpsElement = document.createElement('div')
+
+  fpsElement.style.position = 'fixed'
+  fpsElement.style.top = '5px'
+  fpsElement.style.left = '5px'
+  fpsElement.style.zIndex = '9999'
+  fpsElement.style.color = '#f70606'
+  fpsElement.style.fontFamily = 'monospace'
+  fpsElement.style.fontSize = '9px'
+  fpsElement.style.opacity = '0.5'
+  fpsElement.style.pointerEvents = 'none'
+
+  document.body.appendChild(fpsElement)
+
   renderer.setAnimationLoop(() => {
     //inspector.begin()
     timer.update()
@@ -137,6 +162,19 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
 
     postProcessing.render()
     //inspector.finish()
+
+    frames++
+
+    const now = performance.now()
+
+    if (now - lastTime >= 500) {
+      const fps = Math.round((frames * 1000) / (now - lastTime))
+
+      fpsElement.textContent = `${fps}`
+
+      frames = 0
+      lastTime = now
+    }
   })
 
   // 10. Restituire la funzione di cleanup
@@ -147,5 +185,7 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
     controls.dispose()
     renderer.dispose()
     disposeAudio()
+
+    fpsElement.remove()
   }
 }

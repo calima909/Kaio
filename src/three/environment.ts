@@ -44,10 +44,22 @@ export async function loadEnvironment(scene: Scene, renderer: WebGPURenderer) {
     maxDisplayBoost: Math.pow(2, metadata.hdrCapacityMax)
   })
 
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+
+  const maxSize = isMobile ? 1024 : 2048
+
+  const scale = Math.min(
+    1,
+    maxSize / Math.max(sdr.image.width, sdr.image.height)
+  )
+
+  const width = Math.floor(sdr.image.width * scale)
+  const height = Math.floor(sdr.image.height * scale)
+
   const quadRenderer = new QuadRenderer({
-    width:      sdr.image.width,
-    height:     sdr.image.height,
-    type:       HalfFloatType,
+    width,
+    height,
+    type: HalfFloatType,
     colorSpace: LinearSRGB,
     material,
     renderer,
@@ -64,6 +76,7 @@ export async function loadEnvironment(scene: Scene, renderer: WebGPURenderer) {
   scene.environment = envTexture
   scene.environmentRotation = rotation
   scene.background = envTexture
+  //scene.background = sdr
   scene.backgroundRotation = rotation
 
   sdr.dispose()

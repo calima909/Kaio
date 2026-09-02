@@ -9,6 +9,7 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { hotspots } from '@/store/hotspots'
+import { toggleCar, toggleFountain } from '@/three/animations.ts'
 
 const props = defineProps<{
   id: string
@@ -43,6 +44,12 @@ const starsLayout = computed(() => {
 })
 
 function onClick () {
+  if (props.id === 'car') {
+    toggleCar()
+  }
+  else if (props.id === 'fontana') {
+    toggleFountain()
+  }
   router.push(props.route)
 }
 
@@ -57,7 +64,7 @@ function onClick () {
     @click="onClick"
   >
     <span
-      class="absolute w-5 h-5 rounded-full
+      class="absolute w-5 h-5 max-md:w-3.5 max-md:h-3.5 rounded-full
             bg-gradient-to-br from-orange-300 via-orange-400 to-orange-600
             shadow-[0_0_12px_rgba(251,146,60,0.9),0_0_24px_rgba(251,146,60,0.6)]
             transition-transform duration-200
@@ -65,7 +72,7 @@ function onClick () {
     />
 
     <span
-      class="absolute text-[10px] font-bold text-red-700
+      class="absolute text-[10px] max-md:text-[7px] font-bold text-red-700
             pointer-events-none select-none flex flex-col items-center leading-none"
     >
       <span v-for="(stars, i) in starsLayout" :key="i">
@@ -73,7 +80,8 @@ function onClick () {
       </span>
     </span>
     <span
-      class="absolute w-6 h-6 rounded-full border border-orange-300/40 animate-ping"
+      class="absolute w-6 h-6 max-md:w-4.5 max-md:h-4.5 rounded-full
+            border border-orange-300/40 animate-ping"
     />
   </button>
 </template>

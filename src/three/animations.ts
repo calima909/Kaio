@@ -16,6 +16,8 @@ import type { WaterCone } from './waterFountain'
  * ai nomi assegnati in Blender ed esportati nel GLB.
  */
 
+
+
 export interface SceneAnimations {
   pivotBase: Object3D
   car: Object3D
@@ -43,11 +45,18 @@ const carSpeed = 1
 let carDirection = 0 // 1 = avanti, -1 = indietro, 0 = fermo
 let carStart = false
 
+// Funzione per attivare la machcina su mobile
+export function toggleCar (): void {
+  carStart = !carStart
+}
+
 // Flag per il controllo della fontana
 let isFountainOn = false
+export function toggleFountain (): void {
+  isFountainOn = !isFountainOn
+}
 
 // Setup listener per i controlli tastiera della macchina
-
 const pivotBaseHeight = 0.03
 const pivotBaseSpeed = 1.5
 

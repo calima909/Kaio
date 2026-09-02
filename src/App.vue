@@ -244,7 +244,29 @@ backdrop-filter: blur(4px);
     0 0 6px rgba(255,0,0,0.9);
 }
 
+@media (max-width: 768px) {
+  .audio-button {
+    width: 55px;
+    height: 55px;
+    top: 16px;
+    left: 16px;
+  }
 
+  .audio-icon {
+    font-size: 12px;
+  }
+
+  .dragon-stars {
+    width: 32px;
+    height: 32px;
+    gap: 8px;
+  }
+
+  .dragon-stars span {
+    width: 9px;
+    height: 9px;
+  }
+}
 
 
 </style>
