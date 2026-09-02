@@ -25,7 +25,6 @@ import { createEngine } from './setup'
 import { WaterCone } from './waterFountain.ts'
 
 import { setupTrackSound, playHouseSound, playFountainSound, playCarSound, disposeAudio } from './sounds.ts'
-//import { Inspector } from 'three/addons/inspector/Inspector.js'
 
 /**
  * Inizializza l'intera scena 3D dentro il contenitore HTML fornito.
@@ -36,11 +35,6 @@ import { setupTrackSound, playHouseSound, playFountainSound, playCarSound, dispo
 export async function initScene (container: HTMLElement): Promise<() => void> {
   // 1. Creare il motore di rendering
   const { scene, camera, renderer, onResize } = await createEngine(container)
-
-  // Inspector commentato per evitare errore fetch su json del enviroment
-  //const inspector = new Inspector()
-  //inspector.setRenderer(renderer)
-  //container.appendChild(inspector.domElement)
 
   // 2. Caricare l'ambiente HDRI
   await loadEnvironment(scene, renderer)
@@ -126,8 +120,6 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
   )
 
   // 9. Avviare il loop di rendering
-  // (il passo 8 qui sopra è il watch: GSAP anima controls.target,
-  //  e controls.update() nel loop applica lo spostamento ogni frame)
   const timer = new Timer()
 
   let frames = 0
@@ -148,7 +140,6 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
   document.body.appendChild(fpsElement)
 
   renderer.setAnimationLoop(() => {
-    //inspector.begin()
     timer.update()
     const delta = timer.getDelta()
     const elapsed = timer.getElapsed()
@@ -161,7 +152,6 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
     updateHotspotScreenPositions(markers, camera, container)
 
     postProcessing.render()
-    //inspector.finish()
 
     frames++
 
@@ -185,7 +175,6 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
     controls.dispose()
     renderer.dispose()
     disposeAudio()
-
     fpsElement.remove()
   }
 }

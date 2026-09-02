@@ -26,7 +26,6 @@ export async function createEngine (container: HTMLElement): Promise<EngineConte
   const camera = new PerspectiveCamera(45, aspect, 0.1, 1000)
 
   const renderer = new WebGPURenderer({ antialias: true })
-  // renderer.setPixelRatio(window.devicePixelRatio)
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
   renderer.setSize(container.clientWidth, container.clientHeight)
   renderer.toneMapping = NeutralToneMapping
