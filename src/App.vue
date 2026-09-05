@@ -285,6 +285,10 @@ backdrop-filter: blur(4px);
     height: 55px;
     top: 16px;
     left: 16px;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    touch-action: none;
   }
 
   .audio-icon {
