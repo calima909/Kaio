@@ -9,7 +9,7 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { hotspots } from '@/store/hotspots'
-import { toggleCar, toggleFountain } from '@/three/animations.ts'
+// import { toggleCar, toggleFountain } from '@/three/animations.ts'
 
 const props = defineProps<{
   id: string
@@ -44,12 +44,12 @@ const starsLayout = computed(() => {
 })
 
 function onClick () {
-  if (props.id === 'car') {
-    toggleCar()
-  }
-  else if (props.id === 'fontana') {
-    toggleFountain()
-  }
+  // if (props.id === 'car') {
+  //   toggleCar()
+  // }
+  // else if (props.id === 'fontana') {
+  //   toggleFountain()
+  // }
   router.push(props.route)
 }
 

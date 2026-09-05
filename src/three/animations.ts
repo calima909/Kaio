@@ -50,6 +50,20 @@ export function toggleCar (): void {
   carStart = !carStart
 }
 
+export function carForward (): void {
+  carDirection = 1
+  carStart = true
+}
+
+export function carBackward (): void {
+  carDirection = -1
+  carStart = false
+}
+
+export function stopCar (): void {
+  carDirection = 0
+}
+
 // Flag per il controllo della fontana
 let isFountainOn = false
 export function toggleFountain (): void {
@@ -88,21 +102,19 @@ export function setupControls (): void {
   window.addEventListener('keydown', (e) => {
     if (e.code === 'ArrowUp') {
       e.preventDefault()
-      carDirection = 1
-      carStart = true
+      carForward()
     } else if (e.code === 'ArrowDown') {
       e.preventDefault()
-      carDirection = -1
-      carStart = false
+      carBackward()
     } else if (e.code === 'Space') {
       e.preventDefault()
-      isFountainOn = !isFountainOn      
+      toggleFountain()    
     }   
   })
 
   window.addEventListener('keyup', (e) => {
     if (e.code === 'ArrowUp' || e.code === 'ArrowDown') {
-      carDirection = 0
+      stopCar()
     }
   })
 }

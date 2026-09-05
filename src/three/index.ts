@@ -132,9 +132,7 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
   fpsElement.style.left = '5px'
   fpsElement.style.zIndex = '9999'
   fpsElement.style.color = '#f70606'
-  fpsElement.style.fontFamily = 'monospace'
-  fpsElement.style.fontSize = '9px'
-  fpsElement.style.opacity = '0.5'
+  fpsElement.style.fontSize = '12px'
   fpsElement.style.pointerEvents = 'none'
 
   document.body.appendChild(fpsElement)

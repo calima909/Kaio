@@ -11,6 +11,7 @@ import { hotspots } from '@/store/hotspots'
 import { initScene } from '@/three/index'
 
 import { getMutedState, toggleMute } from '@/three/sounds.ts'
+import { carForward, carBackward, toggleFountain, stopCar } from '@/three/animations.ts' 
 
 const hotspotIds = Object.keys(hotspots) as (keyof typeof hotspots)[]
 
@@ -45,20 +46,54 @@ function handleToggleAudio() {
   />
   <!-- Bottone audio-mute -->
   <button
-  class="audio-button"
-  @click="handleToggleAudio"
->
-  <div class="dragon-stars">
-    <span />
-    <span />
-    <span />
-    <span />
+    class="audio-button"
+    @click="handleToggleAudio"
+  >
+    <div class="dragon-stars">
+      <span />
+      <span />
+      <span />
+      <span />
+    </div>
+    <div class="audio-icon">
+      {{ isMuted ? '🔇' : '🔊' }}
+    </div>
+  </button>
+
+  <!-- Controlli mobile -->
+  <div class="mobile-controls">
+
+    <button
+      class="control-button"
+      @pointerdown="carForward"
+      @pointerup="stopCar"
+      @pointercancel="stopCar"
+      @pointerleave="stopCar"
+      aria-label="macchina avanti"
+    >
+      ▲
+    </button>
+
+    <button
+      class="control-button"
+      @pointerdown="carBackward"
+      @pointerup="stopCar"
+      @pointercancel="stopCar"
+      @pointerleave="stopCar"
+      aria-label="macchina indietro"
+    >
+      ▼
+    </button>
+
   </div>
 
-  <div class="audio-icon">
-    {{ isMuted ? '🔇' : '🔊' }} 
-  </div>
-</button>
+  <button
+    class="fountain-button"
+    @pointerdown="toggleFountain"
+    aria-label="attiva fontana"
+    >
+      ⛲
+  </button>
 
   <!-- In modalità dettaglio nascondiamo i marker: focus sul contenuto e meno rumore visivo. -->
   <TransitionGroup name="hotspot-group">
@@ -265,6 +300,83 @@ backdrop-filter: blur(4px);
   .dragon-stars span {
     width: 9px;
     height: 9px;
+  }
+}
+
+.mobile-controls,
+.fountain-button {
+  display: none;
+}
+
+@media (max-width: 768px) {
+
+  .mobile-controls {
+    position: fixed;
+    left: 16px;
+    bottom: 20px;
+    z-index: 100;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .control-button,
+  .fountain-button {
+    width: 55px;
+    height: 55px;
+
+    border: none;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    background:
+      radial-gradient(
+        circle at 30% 30%,
+        #ffe27a 0%,
+        #ffb300 35%,
+        #ff7a00 70%,
+        #d94b00 100%
+      );
+
+    box-shadow:
+      inset -6px -10px 16px rgba(0,0,0,0.25),
+      inset 6px 6px 10px rgba(255,255,255,0.35),
+      0 0 20px rgba(255,140,0,0.8),
+      0 0 40px rgba(255,100,0,0.45);
+
+    color: #c40000;
+    font-size: 20px;
+    font-weight: bold;
+
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+
+    overflow: hidden;
+    backdrop-filter: blur(4px);
+
+    -webkit-tap-highlight-color: transparent;
+    touch-action: none;
+  }
+
+  .control-button:active,
+  .fountain-button:active {
+    transform: scale(0.9);
+  }
+
+  .fountain-button {
+    position: fixed;
+    right: 16px;
+    bottom: 20px;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 22px;
   }
 }
 
