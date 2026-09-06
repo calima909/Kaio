@@ -125,6 +125,7 @@ export async function initScene (container: HTMLElement): Promise<() => void> {
   let frames = 0
   let lastTime = performance.now()
 
+  // contatore FPS
   const fpsElement = document.createElement('div')
 
   fpsElement.style.position = 'fixed'

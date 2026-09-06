@@ -102,5 +102,20 @@ function close () {
 
     line-height: 1.6;
   }
+
+  @media (max-width: 768px) {
+  .dragon-title {
+    animation: none;
+    text-shadow:
+      2px 2px 0 #000,
+      0 0 10px #ff9800,
+      0 0 20px #ff5722;
+  }
+
+  .backdrop-blur-sm {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
 </style>
 
