@@ -59,13 +59,35 @@ body { overflow: hidden; background: #000; }
   transition: transform 0.2s ease;
 }
 
+/* riflesso vetro */
+.audio-button::before,
+.car-button::before,
+.fountain-button::before {
+  content: '';
+
+  position: absolute;
+  top: 10px;
+  left: 12px;
+
+  width: 38px;
+  height: 18px;
+
+  border-radius: 50%;
+
+  background: rgba(255,255,255,0.45);
+
+  transform: rotate(-20deg);
+
+  filter: blur(1px);
+}
+
 .audio-button:hover,
 .car-button:hover,
 .fountain-button:hover {
   transform: scale(1.08);
 }
 
-.audio-button:active
+.audio-button:active,
 .car-button:active,
 .fountain-button:active {
   transform: scale(0.95);
@@ -300,6 +322,16 @@ body { overflow: hidden; background: #000; }
 
   .fountain-button {
     font-size: 22px;
+  }
+
+  /* Riflesso vetro - mobile */
+  .audio-button::before,
+  .car-button::before,
+  .fountain-button::before {
+    top: 7px;
+    left: 9px;
+    width: 29px;
+    height: 13px;
   }
   
   .stars-4 span:nth-child(1) {
