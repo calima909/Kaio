@@ -93,8 +93,8 @@ body { overflow: hidden; background: #000; }
 
 .dragon-stars span {
   position: absolute;
-  width: 9px;
-  height: 9px;
+  width: 11px;
+  height: 11px;
   background: #c40000;
 
   clip-path: polygon(
@@ -137,7 +137,7 @@ body { overflow: hidden; background: #000; }
 
 .stars-5 span:nth-child(1) {
   top: 0px;
-  left: 16.5px;
+  left: 16px;
 }
 
 .stars-5 span:nth-child(2) {
